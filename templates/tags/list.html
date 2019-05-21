@@ -1,0 +1,33 @@
+{% include 'header.html' %}
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12" id="content">
+				<h2>Liste des tags</h2>
+				<table class="table">
+					<tr>
+						<th>ID</th>
+						<th>Tag</th>
+						<th></th>
+						<th><a href="{{ url_for('tags.edit') }}">➕</a></th>
+					</tr>
+					{% for tag in tags %}
+						<tr>
+							<td>{{ tag.ID_Tag }}</td>
+							<td>{{ tag.Tag }}</td>
+							<td><a href="{{ url_for('tags.edit', id=tag.ID_Tag ) }}">✏️</a></td>
+							<td><a href="javascript:del({{ tag.ID_Tag }})">❌</a></td>
+						</tr>
+					{% endfor %}
+				</table>
+			</div>
+		</div>
+	</div>
+	<script>
+		function del(id){
+			var r = confirm('Voulez-vous vraiment supprimer ce tag ?');
+			if (r) {
+				window.location='/tags/delete/'+id;
+			}
+		}
+	</script>
+{% include 'footer.html' %}

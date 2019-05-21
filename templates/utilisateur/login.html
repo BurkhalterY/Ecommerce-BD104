@@ -1,0 +1,47 @@
+{% include 'header.html' %}
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12" id="content">
+				<div class="row">
+					<div class="col-lg-6">
+						<h2>Connexion</h2>
+						{% if msg == 'success' %}
+							<div class="alert alert-success" role="alert">Connexion réussie</div>
+						{% endif %}
+						{% if msg == 'fields' %}
+							<div class="alert alert-danger" role="alert">Veuillez remplir tous les champs</div>
+						{% endif %}
+						{% if msg == 'username' %}
+							<div class="alert alert-danger" role="alert">Nom d'utilisateur introuvable</div>
+						{% endif %}
+						{% if msg == 'password' %}
+							<div class="alert alert-danger" role="alert">Mot de passe incorect</div>
+						{% endif %}
+						<form method="POST">
+							<table>
+								<tr>
+									<td><label for="username">Nom d'utilisateur :</label></td>
+									<td><input type="text" name="username" value="{{ username }}" /></td>
+								</tr>
+								<tr>
+									<td><label for="password">Mot de passe :</label></td>
+									<td><input type="password" name="password" /></td>
+								</tr>
+								<tr>
+									<td><a href="{{ url_for('utilisateur.register') }}">S'inscrire</a></td>
+									<td><input type="submit" value="Se connecter" /></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+					<div class="col-lg-6">
+						<strong>Compte utilisateur :</strong>
+						<pre>Identifiant : user<br>Mot de passe : 1234</pre>
+						<strong>Compte administrateur :</strong>
+						<pre>Identifiant : admin<br>Mot de passe : asdf</pre>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% include 'footer.html' %}

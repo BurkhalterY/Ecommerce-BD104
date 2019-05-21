@@ -1,0 +1,139 @@
+body {
+	margin-top: 20px;
+	background-color: #e9e9e9;
+}
+
+#header {
+	background-color: #00559D;
+}
+
+#header h1 a, #header h4 {
+	color: white;
+	font-weight: bold;
+}
+
+#header h1 a:hover {
+	text-decoration: none;
+}
+
+#login {
+	color: white;
+	text-align: right;
+}
+
+#login a {
+	color: white;
+}
+
+#search {
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+
+#menu {
+	background-color: #00559D;
+}
+
+#menu ul {
+	list-style-type: none;
+	padding: 0;
+}
+
+#menu a {
+	color: white;
+}
+
+#content {
+	background-color: white;
+	min-height: 200px;
+	padding-bottom: 5px;
+}
+
+#footer {
+	height: 75px;
+	background-color: #00559D;
+}
+
+#footer p {
+	color: white;
+	text-align: center;
+	line-height: 75px;
+}
+
+div.gallery {
+	float: left;
+	margin: 5px;
+	border-left: 1px solid #ccc;
+	border-right: 1px solid #ccc;
+	width: 220px;
+	height: 300px;
+	position: relative;
+}
+
+div.frame {
+	width: 100%;
+	height: 200px;
+	position: relative;
+}
+
+div.frame img {
+	max-width: 100%;
+	max-height: 200px;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
+
+div.desc {
+	padding-left: 10px;
+	padding-right: 10px;
+	position: absolute;
+	bottom: 0;
+}
+
+.carousel-inner {
+	height: 300px;
+	border-right: 1px solid #dee2e6;
+}
+
+#galerie img {
+	width: auto;
+	max-width: 100%;
+	height: auto;
+	max-height: 300px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+th > i {
+	margin-left: 30px;
+}
+
+button > a {
+	color: white;
+}
+
+button > a:hover {
+	color: white;
+	text-decoration: none;
+}
+
+.caracteristique {
+	margin-bottom: 4px;
+}
+
+#profilePicture {
+	text-align: center;
+}
+
+#profilePicture > img {
+	max-width: 80%;
+}
+
+.description {
+	white-space: pre-wrap;
+}

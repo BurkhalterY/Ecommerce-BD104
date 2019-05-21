@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>E-Commerce i104</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+		<meta name="description" content="E-Commerce i104" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-duallistbox.min.css') }}" />
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+		<link rel="icon" href="{{ url_for('static', filename='medias/favicon.ico') }}" />
+		<script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/jquery.bootstrap-duallistbox.min.js') }}"></script>
+	</head>
+	<body>
+		<div class="container" id="header">
+			<div class="row">
+				<div class="col-lg-8">
+					<h1><a href="/">Module 104</a></h1>
+					<h4>Mon site d'e-commerce</h4>
+				</div>
+				<div id="login" class="col-lg-4">
+					{% if not 'ID_Client' in session %}
+						<p><a href="{{ url_for('utilisateur.register') }}">S'inscrire</a> | <a href="{{ url_for('utilisateur.login') }}">Se connecter</a></p>
+					{% else %}
+						<p>Connecté en tant que <a href="{{ url_for('utilisateur.utilisateur') }}">{{ session['Pseudo'] }}</a><br><a href="{{ url_for('utilisateur.logout') }}">Se déconnecter</a></p>
+					{% endif %}
+					<form method="GET" action="{{ url_for('produits.produits') }}">
+						<input type="text" name="search" placeholder="Rechercher..." />
+						<input type="submit" value="🔍" id="search" />
+					</form>
+				</div>
+			</div>
+		</div>

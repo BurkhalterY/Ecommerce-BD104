@@ -1,0 +1,41 @@
+{% include 'header.html' %}
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-2" id="menu">
+				<ul>
+					{% if main_categorie is not none %}
+						{% set catId = 0 if main_categorie['FK_Categorie_Parent'] is none else main_categorie['FK_Categorie_Parent'] %}
+						<li><a href="{{ url_for('produits.produits', id_categorie=catId) }}">←</a></li>
+					{% endif %}
+					{% for categorie in categories %}
+						<li><a href="{{ url_for('produits.produits', id_categorie=categorie['ID_Categorie']) }}">{{ categorie['Nom_Categorie'] }}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+			<div class="col-lg-10" id="content">
+				<h2>{{ 'Tous les produits' if main_categorie is none else main_categorie['Nom_Categorie'] }}</h2>
+				{% if search %}<p>Résultats pour <i>{{ search }}</i></p>{% endif %}
+				{% for produit in produits %}
+					<div class="gallery">
+						<div class="frame">
+							{% if produit['Chemin'] is none %}
+								<a href="{{ url_for('produits.produit', id_produit=produit['ID_Produit']) }}"><img src="{{ url_for('static', filename='medias/default.png') }}" alt="Image introuvable" /></a>
+							{% else %}
+								<a href="{{ url_for('produits.produit', id_produit=produit['ID_Produit']) }}"><img src="{{ url_for('static', filename='uploads/'+produit['Chemin']) }}" alt="{{ produit['Chemin'] }}" /></a>
+							{% endif %}
+						</div>
+						<div class="desc">
+							<p class="product_name"><strong>{{ produit['Nom_produit'] }}</strong></p>
+							{% if produit['Prix'] % 1 == 0 %}
+								{% set prix = produit['Prix']|round|int|string+'.-' %}
+							{% else %}
+								{% set prix = "%.2f"|format(produit['Prix']) %}
+							{% endif %}
+							<p class="product_price">CHF {{ prix }}</p>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+{% include 'footer.html' %}

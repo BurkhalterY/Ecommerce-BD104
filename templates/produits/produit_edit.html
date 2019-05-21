@@ -1,0 +1,109 @@
+{% include 'header.html' %}
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12" id="content">
+				<h2>Modifier le produit</h2>
+				<form id="formulaire" method="POST" enctype="multipart/form-data">
+					<div class="form-group">
+						<label for="nom_produit">Nom du produit :</label>
+						<input type="text" class="form-control" name="nom_produit" value="{{ produit['Nom_Produit'] }}" />
+					</div>
+					<div class="form-group">
+						<label for="prix_produit">Prix :</label>
+						<input type="text" class="form-control" name="prix_produit" value="{{ produit['Prix'] }}" />
+					</div>
+					<div class="form-group">
+						<label for="description">Description</label>
+						<textarea class="form-control" name="description" >{{ produit['Description'] }}</textarea>
+					</div>
+					<div class="form-group">
+						<label for="cat_produit">Catégorie du produit :</label>
+						<select class="form-control" name="cat_produit">
+							<option value="0" {{ 'selected' if produit['FK_Categorie'] is none }}>.. Racine</option>
+							{% for categorie_dropdown in categories_dropdown recursive %}
+								<option value="{{ categorie_dropdown['ID_Categorie'] }}" {{ 'selected' if produit['FK_Categorie'] == categorie_dropdown['ID_Categorie'] }}>{{ categorie_dropdown['Nom_Categorie'] }}</option>
+								{{ loop(categorie_dropdown['Enfants']) }}
+							{% endfor %}
+						</select>
+					</div>
+					{% if id_produit != 0 %}
+						<h3>Gérer les images</h3>
+						{% for image in images %}
+							<div class="gallery">
+								<div class="frame">
+									<img src="{{ url_for('static', filename='uploads/'+image['Chemin']) }}" alt="{{ image['Chemin'] }}" />
+								</div>
+								<div class="desc">
+									<p>{{ image['Chemin'] }}</p>
+								</div>
+							</div>
+						{% endfor %}
+						<div style="clear:both;"></div>
+						<input type="file" name="images[]" multiple accept="image/*" />
+						<input type="submit" class="btn btn-success" value="Envoyer" />
+
+						<h3>Gérer les caractéristiques</h3>
+						{% for caracteristique in caracteristiques %}
+							<div class="row caracteristique">
+								<div class="col-lg-11">
+									<select class="form-control" name="caracteristique{{ caracteristique['ID_Avoir_Caracteristique'] }}">
+										{% for all_caracteristique in all_caracteristiques %}
+											<option value="{{ all_caracteristique['ID_Valeur_Caracteristique'] }}" {{ 'selected' if caracteristique['ID_Valeur_Caracteristique'] == all_caracteristique['ID_Valeur_Caracteristique'] }}>{{ all_caracteristique['Nom_Cara'] }} - {{ all_caracteristique['Valeur'] }}</option>
+										{% endfor %}
+									</select>
+								</div>
+								<div class="col-lg-1">
+									<input type="submit" class="btn btn-danger" name="delete{{ caracteristique['ID_Avoir_Caracteristique'] }}" value="-" />
+								</div>
+							</div>
+						{% endfor %}
+						<div class="row caracteristique">
+							<div class="col-lg-12">
+								<select class="form-control" name="caracteristique0">
+									<option value="0"></option>
+									{% for all_caracteristique in all_caracteristiques %}
+										<option value="{{ all_caracteristique['ID_Valeur_Caracteristique'] }}">{{ all_caracteristique['Nom_Cara'] }} - {{ all_caracteristique['Valeur'] }}</option>
+									{% endfor %}
+								</select>
+							</div>
+						</div>
+
+						<h3>Gérer les tags</h3>
+						<div class="row">
+							<div class="col-lg-12">
+								<select multiple id="tagsSelect" name="tagsSelect">
+									{% for tag in tags %}
+										<option value="{{ tag.ID_Tag }}" {% for tag_selected in tags_selected %}{% if tag_selected.FK_Tag == tag.ID_Tag %}selected{% endif %}{% endfor %}>{{ tag.Tag }}</option>
+									{% endfor %}
+								</select>
+							</div>
+							<input type="hidden" id="tagsHidden" name="tagsHidden" />
+						</div>
+					{% endif %}
+					<input type="submit" class="btn btn-success" value="✔Enregistrer" />
+					{% if id_produit == 0 %}
+						<a href="{{ url_for('admin.admin') }}"><button type="button" class="btn btn-danger">Retour</button></a>
+					{% else %}
+						<a href="{{ url_for('produits.produit', id_produit=produit['ID_Produit']) }}"><button type="button" class="btn btn-danger">Retour au produit</button></a>
+						<br><br>
+						<a href="javascript:del({{ produit['ID_Produit'] }})"><button type="button" class="btn btn-danger">Supprimer le produit</button></a>
+					{% endif %}
+				</form>
+			</div>
+		</div>
+	</div>
+	<script>
+		function del(id){
+			var r = confirm('Voulez-vous vraiment supprimer ce super produit ?');
+			if (r) {
+				window.location='/produits/delete/'+id;
+			}
+		}
+		
+		var dualListbox = $('#tagsSelect').bootstrapDualListbox();
+		$("#formulaire").submit(function() {
+			var liste = $('#tagsSelect').val();
+			$("#tagsHidden").val(liste);
+		});
+	</script>
+{% include 'footer.html' %}

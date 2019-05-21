@@ -1,0 +1,43 @@
+{% include 'header.html' %}
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12" id="content">
+				<h2>Éditer les catégories</h2>
+				<table class="table">
+					<tr>
+						<th>
+							{% if main_categorie['ID_Categorie'] != 0 %}
+								{% if main_categorie['FK_Categorie_Parent'] is none %}
+									<a href="{{ url_for('categories.categories') }}">←</a>
+								{% else %}
+									<a href="{{ url_for('categories.categories', id_categorie=main_categorie['FK_Categorie_Parent']) }}">←</a>
+								{% endif %}
+							{% endif %}
+							{{ main_categorie['Nom_Categorie'] }}
+						</th>
+						<th>Modifier</th>
+						<th>Supprimer</th>
+					</tr>
+					{% for categorie in categories %}
+						<tr>
+							<td><a href="{{ url_for('categories.categories', id_categorie=categorie['ID_Categorie']) }}">{{ categorie['Nom_Categorie'] }}</a></td>
+							<td><a href="{{ url_for('categories.categorie', id_categorie=categorie['ID_Categorie']) }}">✏️</a></td>
+							<td><a href="javascript:del({{ categorie['ID_Categorie'] }})">❌️</a></td>
+						</tr>
+					{% endfor %}
+					<tr>
+						<td><a href="{{ url_for('categories.categorie', id_categorie=0) }}?parent={{ main_categorie['ID_Categorie'] }}">(+) Ajouter une catégorie ici</a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<script>
+		function del(id){
+			var r = confirm('Voulez-vous vraiment supprimer cette catégorie ?');
+			if (r) {
+				window.location='/categories/delete/'+id;
+			}
+		}
+	</script>
+{% include 'footer.html' %}

@@ -1,0 +1,20 @@
+{% include 'header.html' %}
+	<div class="container" id="content">
+		<div class="row">
+			<div id="profilePicture" class="col-lg-4">
+				<img src="{{ url_for('static', filename='medias/user.bmp') }}" alt="Photo de profile" />
+			</div>
+			<div class="col-lg-8">
+				<h2>{{ client['Pseudo'] }}</h2>
+                <h3>{{ client['Nom'] }} {{ client['Prenom'] }}</h3>
+				<p>Date d'inscription : {{ client['Date_Inscription'] }}<br>Titre : {{ titre }}</p>
+				{% if session['ID_Client'] == client['ID_Client'] %}
+					<p><a href="{{ url_for('utilisateur.mot_de_passe') }}">Changer mon mot de passe</a></p>
+					{% if session['Rang'] >= rang['VENDEUR'] %}
+						<p><a href="{{ url_for('admin.admin') }}">Administration du site</a></p>
+					{% endif %}
+				{% endif %}
+            </div>
+        </div>
+	</div>
+{% include 'footer.html' %}

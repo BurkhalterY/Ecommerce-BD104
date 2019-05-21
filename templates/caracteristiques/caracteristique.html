@@ -1,0 +1,38 @@
+{% include 'header.html' %}
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12" id="content">
+                <h2>{{ caracteristique['Nom_Cara'] }}</h2>
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="nom_cara">Nom de la caractéristique :</label>
+                        <input type="text" class="form-control" name="nom_cara" value="{{ caracteristique['Nom_Cara'] }}" />
+                    </div>
+                    <hr>
+                    <h5>Valeurs :</h5>
+                    {% for valeur in valeurs %}
+                        <div class="row caracteristique">
+                            <div class="col-lg-11">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" name="valeur{{ valeur['ID_Valeur_Caracteristique'] }}" value="{{ valeur['Valeur'] }}" />
+                                </div>
+                            </div>
+                            <div class="col-lg-1">
+                                <input type="submit" class="btn btn-danger" name="delete{{ valeur['ID_Valeur_Caracteristique'] }}" value="-" />
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="row caracteristique">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="valeur0" />
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-success" value="Enregistrer" />
+					<a href="{{ url_for('caracteristiques.caracteristiques') }}"><button type="button" class="btn btn-danger">Retour</button></a>
+                </form>
+			</div>
+		</div>
+	</div>
+{% include 'footer.html' %}
